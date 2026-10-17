@@ -40,7 +40,6 @@
     }
     .textarea-box { min-height: 75px; resize: vertical; }
 
-    /* Stats Grid */
     .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
     .stat-card {
       background: #fff; border: 1.5px solid var(--c-border); border-radius: 16px; padding: 12px; text-align: center;
@@ -48,7 +47,6 @@
     .stat-val { font-size: 17px; font-weight: 700; color: var(--c-main); margin-top: 4px; }
     .stat-lbl { font-size: 11px; color: #64748b; font-weight: 600; }
 
-    /* ตัวกรองช่วงเวลา รายวัน/สัปดาห์/เดือน */
     .filter-btn-group {
       display: flex; gap: 6px; margin-bottom: 14px; justify-content: center; overflow-x: auto;
     }
@@ -60,7 +58,6 @@
       background: var(--c-main); color: #fff; border-color: var(--c-main);
     }
 
-    /* รายการออเดอร์เจาะลึก */
     .order-detail-card {
       background: #fff; border: 1px solid var(--c-border); border-radius: 14px;
       padding: 12px; margin-bottom: 8px; font-size: 12.5px;
@@ -100,7 +97,6 @@
 <body>
 
 <div class="container">
-  <!-- ล็อกอินแอดมิน: ใช้ชื่อ email / password ปลอดภัย -->
   <div class="card" id="loginBox">
     <div class="title">Admin Dashboard ♡ Rifernshop</div>
     <div class="field-group">
@@ -124,12 +120,11 @@
       <button type="button" class="tab-btn" onclick="switchAdminTab('account')">5. บัญชีแอดมิน</button>
     </div>
 
-    <!-- สรุปยอดขาย ต้นทุน กำไร เจาะลึกรายวัน/สัปดาห์/เดือน -->
+    <!-- สถิติยอดขาย -->
     <div class="tab-content active" id="tab-stats">
       <div class="card">
         <div class="title">สรุปยอดขาย ต้นทุน & กำไร ♡</div>
 
-        <!-- ตัวกรองเวลา -->
         <div class="filter-btn-group">
           <button type="button" class="filter-btn active" id="filter-btn-all" onclick="setStatsFilter('all')">ทั้งหมด</button>
           <button type="button" class="filter-btn" id="filter-btn-today" onclick="setStatsFilter('today')">วันนี้</button>
@@ -162,7 +157,6 @@
 
         <hr style="border:none; border-top:1px dashed var(--c-border); margin:14px 0;">
 
-        <!-- รายการเจาะลึกสินค้าที่ขายออกไป -->
         <h4 style="font-size:13.5px; font-weight:700; color:var(--c-main); margin-bottom:10px;">
           📋 รายละเอียดสินค้าที่ขายออกไป (เจาะลึก) ♡
         </h4>
@@ -340,7 +334,6 @@
     document.getElementById(`tab-${name}`).classList.add('active');
   }
 
-  // ดึงออเดอร์ทั้งหมดแบบ Realtime เพื่อคำนวณและแจกแจง
   function listenAllOrders() {
     db.collection(DB_ORDERS).orderBy("createdAt", "desc").onSnapshot(snap => {
       allOrdersData = [];
@@ -356,7 +349,6 @@
     calculateAndRenderStats();
   }
 
-  // คำนวณสรุปยอดขาย ต้นทุน กำไร ตามช่วงเวลาที่เลือก
   function calculateAndRenderStats() {
     const now = new Date();
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -368,7 +360,7 @@
       if (currentStatsFilter === 'today') return orderTime >= startOfToday;
       if (currentStatsFilter === 'week') return orderTime >= sevenDaysAgo;
       if (currentStatsFilter === 'month') return orderTime >= thirtyDaysAgo;
-      return true; // all
+      return true;
     });
 
     let totalSales = 0;
@@ -385,7 +377,6 @@
     document.getElementById('statTotalProfit').textContent = `฿${totalProfit.toFixed(2)}`;
     document.getElementById('statSoldItems').textContent = `${filtered.length} ชิ้น`;
 
-    // สต็อกคงเหลือรวม
     let remainingStock = 0;
     appsEditData.forEach(app => {
       (app.plans || []).forEach(p => {
@@ -394,7 +385,6 @@
     });
     document.getElementById('statTotalRemainingStock').textContent = remainingStock;
 
-    // เรนเดอร์ตารางรายละเอียดสินค้าที่ขายออกไป
     renderSalesDetailList(filtered);
   }
 
@@ -454,7 +444,7 @@
           {
             name: "Netflix 4K",
             thumb: "https://files.catbox.moe/kszmeo.jpeg",
-            desc: "ดูได้ 4K คมชัดสุดๆ ไม่สะดุด ♡",
+            desc: "โดนปิดไม่รับเคลมถ้าไม่ซื้อแบบเคลม ♡",
             category: "แอพดูหนัง",
             tag: "sale",
             discountPercent: 30,
@@ -542,11 +532,19 @@
           <input type="text" class="input-box" value="${app.thumb}" oninput="appsEditData[${aIdx}].thumb=this.value">
         </div>
 
+        <!-- ช่องคำอธิบายเมื่อกดเข้าไป (ที่วงสีแดงไว้) -->
+        <div class="field-group">
+          <label class="field-label">คำอธิบายเมื่อกดเข้าไป (เช่น โดนปิดไม่รับเคลมถ้าไม่ซื้อแบบเคลม ♡)</label>
+          <input type="text" class="input-box" value="${app.desc || ''}" placeholder="ระบุคำอธิบายด้านบนแพ็กเกจ..." oninput="appsEditData[${aIdx}].desc=this.value">
+        </div>
+
+        <!-- หมวดหมู่แบบพิมพ์เองได้อิสระ -->
         <div class="field-group">
           <label class="field-label">หมวดหมู่สินค้า (พิมพ์ตั้งชื่อหมวดหมู่เองได้เลย) ♡</label>
           <input type="text" class="input-box" value="${app.category || 'ทั่วไป'}" placeholder="ระบุชื่อหมวดหมู่" oninput="appsEditData[${aIdx}].category=this.value">
         </div>
 
+        <!-- ป้ายแท็ก และช่องใส่ % ลดราคา -->
         <div style="display:flex; gap:8px; margin-bottom:10px;">
           <div style="flex:1;">
             <label class="field-label">ป้ายแท็กบนรูป</label>
@@ -654,7 +652,7 @@
 
     await batch.commit();
     calculateAndRenderStats();
-    alert("บันทึกสินค้า, หมวดหมู่, ป้ายลดราคา % และสต็อกเรียบร้อยแล้วค่ะ ♡");
+    alert("บันทึกสินค้า, คำอธิบาย, หมวดหมู่, ป้ายลดราคา % และสต็อกเรียบร้อยแล้วค่ะ ♡");
   }
 
   async function saveGeneralConfig() {
