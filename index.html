@@ -10,10 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <!-- ตัวสร้าง QR Code พร้อมเพย์ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
@@ -41,7 +39,6 @@
       user-select: none;
     }
 
-    /* ป้องกันเลขเบอร์โทรและบัญชีกลายเป็นสีน้ำเงินของ iOS Safari ทุกจุด */
     a, a:visited, a:hover, a:active,
     a[href^="tel"], .art-text-box, .copy-pill-btn, .copy-pill-btn * {
       color: var(--text-pastel-dark) !important;
@@ -60,117 +57,44 @@
       overflow-x: hidden;
     }
 
-    .container {
-      width: 100%;
-      max-width: 440px;
-      position: relative;
-      z-index: 2;
-    }
+    .container { width: 100%; max-width: 440px; position: relative; z-index: 2; }
 
     .top-header {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--card-bg);
-      border: 1.5px solid var(--c-border);
-      border-radius: 30px;
-      padding: 5px 8px;
-      margin-bottom: 14px;
-      box-shadow: var(--glow-soft);
-      backdrop-filter: blur(12px);
+      display: flex; align-items: center; gap: 6px; background: var(--card-bg);
+      border: 1.5px solid var(--c-border); border-radius: 30px; padding: 5px 8px;
+      margin-bottom: 14px; box-shadow: var(--glow-soft); backdrop-filter: blur(12px);
     }
-
     .menu-trigger-btn, .music-trigger-btn {
-      width: 36px;
-      height: 36px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      border: 1.5px solid var(--c-border);
-      background: #ffffff;
-      color: var(--c-main);
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%;
+      border: 1.5px solid var(--c-border); background: #ffffff; color: var(--c-main);
+      font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer;
     }
-
-    .header-nav-scroll {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex: 1;
-      overflow-x: auto;
-      scrollbar-width: none;
-      padding: 2px 0;
-    }
+    .header-nav-scroll { display: flex; align-items: center; gap: 4px; flex: 1; overflow-x: auto; scrollbar-width: none; }
     .header-nav-scroll::-webkit-scrollbar { display: none; }
-
     .nav-pill-btn {
-      flex-shrink: 0;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 7px 11px;
-      border-radius: 20px;
-      cursor: pointer;
-      white-space: nowrap;
+      flex-shrink: 0; border: none; background: transparent; color: var(--text-muted);
+      font-size: 12px; font-weight: 600; padding: 7px 11px; border-radius: 20px; cursor: pointer; white-space: nowrap;
     }
     .nav-pill-btn.active {
-      background: #ffffff;
-      color: var(--c-main);
-      box-shadow: 0 2px 8px rgba(244, 114, 182, 0.3);
-      border: 1px solid var(--c-border);
-      font-weight: 700;
+      background: #ffffff; color: var(--c-main); box-shadow: 0 2px 8px rgba(244, 114, 182, 0.3);
+      border: 1px solid var(--c-border); font-weight: 700;
     }
 
-    /* Drawer */
     .side-drawer {
-      position: fixed;
-      top: 0;
-      left: -290px;
-      width: 280px;
-      height: 100vh;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(16px);
-      z-index: 999999;
-      box-shadow: 10px 0 35px rgba(0,0,0,0.15);
-      transition: left 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      padding: 24px 18px;
-      border-right: 2px solid var(--c-border);
+      position: fixed; top: 0; left: -290px; width: 280px; height: 100vh;
+      background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(16px); z-index: 999999;
+      box-shadow: 10px 0 35px rgba(0,0,0,0.15); transition: left 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+      display: flex; flex-direction: column; padding: 24px 18px; border-right: 2px solid var(--c-border);
     }
     .side-drawer.open { left: 0; }
-    .drawer-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(4px);
-      z-index: 999990;
-      display: none;
-    }
+    .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); backdrop-filter: blur(4px); z-index: 999990; display: none; }
     .drawer-overlay.open { display: block; }
-    .drawer-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      border-bottom: 1.5px dashed var(--c-border);
-      padding-bottom: 12px;
-    }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 1.5px dashed var(--c-border); padding-bottom: 12px; }
     .drawer-close { background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer; }
 
     .user-profile-badge {
       background: linear-gradient(135deg, var(--c-soft), var(--c-lightest));
-      border: 1.5px solid var(--c-border);
-      border-radius: 18px;
-      padding: 12px;
-      margin-bottom: 16px;
-      text-align: center;
+      border: 1.5px solid var(--c-border); border-radius: 18px; padding: 12px; margin-bottom: 16px; text-align: center;
     }
     .role-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: 4px; }
     .role-user { background: var(--c-soft); color: var(--c-main); border: 1px solid var(--c-border); }
@@ -184,11 +108,9 @@
       cursor: pointer; display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
     }
     .drawer-nav-btn.active {
-      background: linear-gradient(135deg, var(--c-border), var(--c-main));
-      color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; border-color: transparent;
+      background: linear-gradient(135deg, var(--c-border), var(--c-main)); color: #fff !important; border-color: transparent;
     }
 
-    /* Floating Image */
     .floating-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
     .float-item {
       position: absolute; bottom: -70px; width: 36px; height: 36px; object-fit: contain;
@@ -208,8 +130,6 @@
       background: var(--card-bg); border: 1.5px solid #ffffff; border-radius: 28px;
       padding: 16px; box-shadow: var(--glow-soft); backdrop-filter: blur(12px); margin-bottom: 14px;
     }
-
-    /* Banner & Profile */
     .banner-wrap { width: 100%; height: 140px; border-radius: 20px; overflow: hidden; background: var(--c-soft); border: 1.5px solid #fff; }
     .banner-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .profile-wrap { position: relative; margin-top: -46px; text-align: center; }
@@ -228,14 +148,13 @@
       margin-top: 16px; box-shadow: 0 6px 18px rgba(244, 114, 182, 0.32);
     }
 
-    /* กล่องอัปเดตคำสั่งซื้อสด */
     .live-feed-card {
       background: #ffffff; border: 1.5px dashed var(--c-border); border-radius: 18px; padding: 10px 14px;
       margin-top: 14px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-muted);
     }
     .feed-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; }
 
-    /* Category Filter */
+    /* แท็บหมวดหมู่แบบไดนามิก */
     .category-scroll {
       display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-bottom: 12px; padding: 2px 0;
     }
@@ -246,18 +165,19 @@
     }
     .cat-btn.active { background: var(--c-main); color: #fff; border-color: var(--c-main); }
 
-    /* Grid & Card แอพ */
     .apps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .app-box-card {
       background: #ffffff; border: 1.5px solid var(--c-border); border-radius: 22px;
       overflow: hidden; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: relative;
     }
+
+    /* สไตล์ป้ายบนกล่องสินค้า */
     .tag-badge {
       position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 10px;
-      font-size: 10px; font-weight: 700; color: #fff; z-index: 3;
+      font-size: 10.5px; font-weight: 700; color: #fff; z-index: 3; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
     .tag-hot { background: #ef4444; }
-    .tag-sale { background: #f59e0b; }
+    .tag-sale { background: linear-gradient(135deg, #f59e0b, #ea580c); }
     .tag-pop { background: var(--c-main); }
 
     .app-box-thumb { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: #fafafa; }
@@ -265,12 +185,10 @@
     .app-box-name { font-size: 13.5px; font-weight: 700; color: var(--text-pastel-dark); }
     .app-sub-info { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
 
-    /* Payment & QR */
     .art-text-box {
       background: #ffffff; border: 1.5px dashed var(--c-border); border-radius: 20px;
       padding: 14px; font-family: monospace; font-size: 13px; line-height: 1.6;
-      white-space: pre-wrap; text-align: center; color: var(--text-pastel-dark) !important;
-      margin-bottom: 12px;
+      white-space: pre-wrap; text-align: center; color: var(--text-pastel-dark) !important; margin-bottom: 12px;
     }
     .copy-pill-btn {
       display: flex; align-items: center; justify-content: space-between; background: #ffffff;
@@ -278,28 +196,26 @@
       margin-bottom: 8px; cursor: pointer; font-size: 13.5px; font-weight: 600;
     }
     .qr-generate-card {
-      background: #fff; border: 1.5px solid var(--c-border); border-radius: 22px;
-      padding: 16px; text-align: center; margin-bottom: 14px;
+      background: #fff; border: 1.5px solid var(--c-border); border-radius: 22px; padding: 16px; text-align: center; margin-bottom: 14px;
     }
     #qrcodeDisplay {
       display: flex; justify-content: center; align-items: center; margin: 12px auto;
       padding: 10px; background: #fff; border-radius: 16px; width: fit-content; border: 1px dashed var(--c-border);
     }
     .slip-uploader-box {
-      border: 2px dashed var(--c-main); border-radius: 22px; padding: 20px 14px;
-      text-align: center; background: #fff9fb; cursor: pointer; margin-top: 14px;
+      border: 2px dashed var(--c-main); border-radius: 22px; padding: 20px 14px; text-align: center; background: #fff9fb; cursor: pointer; margin-top: 14px;
     }
 
-    /* ประวัติการสั่งซื้อ & กล่องแยกข้อมูลสินค้า */
     .order-history-card {
       background: #ffffff; border: 1.5px solid var(--c-border); border-radius: 20px;
       padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
     }
-    .order-header-row { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .order-header-row { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .order-sku-badge { font-size: 11px; font-weight: 700; color: var(--c-deep); background: #fff0f6; border: 1px solid var(--c-border); padding: 2px 6px; border-radius: 8px; display: inline-block; margin-bottom: 8px; }
     .order-code-box {
-      background: #fffafc; border: 1.5px dashed var(--c-border); border-radius: 16px;
+      background: #fffafc; border: 1.5px dashed var(--c-border); border-radius: 14px;
       padding: 12px; font-size: 12px; line-height: 1.6; color: var(--text-pastel-dark);
-      white-space: pre-wrap; word-break: break-word; user-select: text;
+      white-space: pre-wrap; word-break: break-word; user-select: text; margin-bottom: 8px;
     }
     .extracted-fields-grid {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 8px;
@@ -313,42 +229,38 @@
     .btn-main {
       width: 100%; background: linear-gradient(135deg, var(--c-border), var(--c-main));
       color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
-      border: none; padding: 13px; border-radius: 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+      border: none; padding: 11px; border-radius: 18px; font-size: 13.5px; font-weight: 700; cursor: pointer;
+    }
+    .btn-sub {
+      width: 100%; background: #ffffff; border: 1.5px solid var(--c-border);
+      color: var(--c-main) !important; padding: 9px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 6px;
     }
     .input-field {
-      width: 100%; border: 1.5px solid var(--c-border); border-radius: 14px;
-      padding: 12px 14px; font-size: 13px; outline: none; margin-bottom: 10px; background: #ffffff;
+      width: 100%; border: 1.5px solid var(--c-border); border-radius: 14px; padding: 12px 14px; font-size: 13px; outline: none; margin-bottom: 10px; background: #ffffff;
     }
     .auth-toggle-link {
       font-size: 12px; color: var(--c-main) !important; text-align: center; cursor: pointer; margin-top: 10px; display: block; font-weight: 600;
     }
 
-    /* Modal */
     .app-modal {
       position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(6px);
       z-index: 9999999; display: none; align-items: center; justify-content: center; padding: 16px;
     }
     .app-modal.open { display: flex; }
     .app-modal-content {
-      background: #ffffff; width: 100%; max-width: 400px; border-radius: 28px;
-      padding: 22px 18px; border: 2px solid var(--c-border); max-height: 85vh; overflow-y: auto;
+      background: #ffffff; width: 100%; max-width: 400px; border-radius: 28px; padding: 22px 18px; border: 2px solid var(--c-border); max-height: 85vh; overflow-y: auto;
     }
     .plan-option-card {
-      border: 1.5px solid var(--c-border); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px;
-      display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+      border: 1.5px solid var(--c-border); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
     }
     .plan-option-card.selected { border-color: var(--c-main); background: var(--c-soft); }
   </style>
 </head>
 <body>
 
-  <!-- เพลงตามข้อ 14 -->
   <audio id="bgMusic" loop preload="auto" src="https://file.garden/asG8Gt-rqWIpi3II/Lil%20Peep%20-%20nuts%20(feat.%20rainy%20bear)%20(Official%20Audio).mp3"></audio>
-
-  <!-- รูปลอย mjiy0o.png ตามข้อ 13 -->
   <div class="floating-layer" id="floatContainer"></div>
 
-  <!-- แถบด้านข้าง -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
   <div class="side-drawer" id="sideDrawer">
     <div class="drawer-header">
@@ -375,88 +287,61 @@
 
   <div class="container">
     
-    <!-- Top Header -->
     <div class="top-header">
       <button type="button" class="menu-trigger-btn" onclick="toggleDrawer(true)">☰</button>
-      
       <div class="header-nav-scroll">
         <button type="button" class="nav-pill-btn active" id="nav-btn-profile" onclick="switchNavTab('profile')">home</button>
         <button type="button" class="nav-pill-btn" id="nav-btn-apps" onclick="switchNavTab('apps')">เลือกสินค้าที่ต้องการสั่งซื้อ</button>
         <button type="button" class="nav-pill-btn" id="nav-btn-topup" onclick="switchNavTab('topup')">payment ♡</button>
         <button type="button" class="nav-pill-btn" id="nav-btn-history" onclick="switchNavTab('history')">ประวัติการสั่งซื้อ</button>
       </div>
-
       <button type="button" class="music-trigger-btn" onclick="toggleMusic()">🎵</button>
     </div>
 
-    <!-- 1. หน้า Home -->
+    <!-- 1. Home -->
     <div class="tab-view active" id="tab-profile">
       <div class="glass-card">
-        <div class="banner-wrap">
-          <img id="bannerImg" src="https://files.catbox.moe/d6xyx0.gif" alt="Banner">
-        </div>
-        <div class="profile-wrap">
-          <img id="profileImg" src="https://files.catbox.moe/3utaq6.jpeg" alt="Profile">
-        </div>
+        <div class="banner-wrap"><img id="bannerImg" src="https://files.catbox.moe/d6xyx0.gif" alt="Banner"></div>
+        <div class="profile-wrap"><img id="profileImg" src="https://files.catbox.moe/3utaq6.jpeg" alt="Profile"></div>
         <h1 class="shop-name-title" id="shopNameText">Rifernshop ♡</h1>
         <div class="shop-bio-box" id="shopBioText">
 กดเว็บได้ตลอด 24 ชั่วโมง สมัครแล้วทักแจ้งยูสและช่องทางการขายนะคับ แอพมีปัญหาทักในไลน์only
         </div>
-        <a href="https://lin.ee/9mXRuEw" target="_blank" class="line-oa-btn" id="lineOaLink">
-          แจ้งปัญหาตรงนี้ @677ogeof ♡
-        </a>
+        <a href="https://lin.ee/9mXRuEw" target="_blank" class="line-oa-btn" id="lineOaLink">แจ้งปัญหาตรงนี้ @677ogeof ♡</a>
 
-        <!-- แถบคำสั่งซื้อล่าสุดแบบสด -->
         <div class="live-feed-card" id="liveOrderFeed">
           <div class="feed-dot"></div>
           <div id="liveOrderText">ยินดีต้อนรับสู่ Rifernshop พร้อมให้บริการ 24 ชม. ♡</div>
         </div>
       </div>
 
-      <!-- โซนสินค้ายอดฮิต & แนะนำ -->
       <div class="glass-card">
-        <h3 style="font-size:14.5px; font-weight:700; color:var(--c-main); margin-bottom:12px;">
-          🔥 สินค้ายอดฮิต & คนกดบ่อยสุด ♡
-        </h3>
+        <h3 style="font-size:14.5px; font-weight:700; color:var(--c-main); margin-bottom:12px;">🔥 สินค้ายอดฮิต & คนกดบ่อยสุด ♡</h3>
         <div class="apps-grid" id="homeHotAppsGrid"></div>
       </div>
     </div>
 
-    <!-- 2. หน้าเลือกซื้อสินค้า (Apps) -->
+    <!-- 2. เลือกสินค้า -->
     <div class="tab-view" id="tab-apps">
       <div class="glass-card">
-        <h2 style="font-size:16px; font-weight:700; color:var(--c-main); text-align:center; margin-bottom:12px;">
-          เลือกสินค้าที่ต้องการสั่งซื้อ ♡
-        </h2>
+        <h2 style="font-size:16px; font-weight:700; color:var(--c-main); text-align:center; margin-bottom:12px;">เลือกสินค้าที่ต้องการสั่งซื้อ ♡</h2>
         
-        <!-- หมวดหมู่สินค้า -->
-        <div class="category-scroll" id="categoryScroll">
-          <button type="button" class="cat-btn active" onclick="filterCategory('all', this)">ทั้งหมด ♡</button>
-          <button type="button" class="cat-btn" onclick="filterCategory('ยอดฮิต', this)">🔥 ยอดฮิต</button>
-          <button type="button" class="cat-btn" onclick="filterCategory('ลดราคา', this)">🏷️ ลดราคา</button>
-          <button type="button" class="cat-btn" onclick="filterCategory('แอพดูหนัง', this)">🎬 แอพดูหนัง</button>
-          <button type="button" class="cat-btn" onclick="filterCategory('ฟังเพลง', this)">🎧 ฟังเพลง</button>
-          <button type="button" class="cat-btn" onclick="filterCategory('ทั่วไป', this)">✨ ทั่วไป</button>
-        </div>
+        <!-- หมวดหมู่แบบสร้างอัตโนมัติตามที่มีการตั้งค่าในระบบ -->
+        <div class="category-scroll" id="categoryScroll"></div>
 
         <div class="apps-grid" id="appsGrid"></div>
       </div>
     </div>
 
-    <!-- 3. หน้า Payment ♡ -->
+    <!-- 3. Payment -->
     <div class="tab-view" id="tab-topup">
       <div class="glass-card">
-        <h2 style="font-size:16px; font-weight:700; color:var(--c-main); text-align:center; margin-bottom:12px;">
-          payment ♡
-        </h2>
-
-        <!-- กล่องข้อความแจ้งเตือนข้อ 8 -->
+        <h2 style="font-size:16px; font-weight:700; color:var(--c-main); text-align:center; margin-bottom:12px;">payment ♡</h2>
         <div class="art-text-box">˙✧˖°  โอนผิด ไม่รับผิดชอบ  เช็คชื่อบัญชีก่อนโอนนะคะ ⸝⸝ ♡
 𓊆บัญชี - บัณฑิตา อิ่มอ่ำ เท่านั้น𓊇ྀི
 
 ｡⋆୨โอนเกินทบยอดหรือรอเติมสินค้าเท่านั้นไม่คืนเงินนะคะ ｡°</div>
 
-        <!-- กล่องคัดลอกบัญชี k-bank & wallet ตามข้อ 9 (ไร้สีน้ำเงิน) -->
         <div class="copy-pill-btn" onclick="copyText('1251363338', 'คัดลอกเลขบัญชี k-bank แล้ว ♡')">
           <span style="font-weight:600;">k-bank : 1251363338</span>
           <span style="color:var(--c-main) !important; font-size:12px;">คัดลอก ♡</span>
@@ -466,27 +351,18 @@
           <span style="color:var(--c-main) !important; font-size:12px;">คัดลอก ♡</span>
         </div>
 
-        <!-- ช่องใส่ฟอร์มแจ้งปัญหาข้อ 10 -->
         <div class="art-text-box" style="margin-top:10px;">꒰✿ เติมเงินแล้วสลิปไม่ตรวจหรือเงินไม่เข้าเว็บแจ้งแอดมินทีไลน์ปัญหาได้เลยค่ะ ꒱ @677ogeof ♡</div>
 
-        <!-- ระบบสร้างคิวอาร์โค้ดแบบระบุจำนวนเงิน PromptPay Dynamic QR -->
         <div class="qr-generate-card">
-          <div style="font-size:13.5px; font-weight:700; color:var(--c-main);">
-            ⚡ สแกนจ่ายพร้อมเพย์ (ระบุจำนวนเงิน) ♡
-          </div>
-          <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">
-            พร้อมเพย์: 0806103734 (บัณฑิตา อิ่มอ่ำ)
-          </div>
-
+          <div style="font-size:13.5px; font-weight:700; color:var(--c-main);">⚡ สแกนจ่ายพร้อมเพย์ (ระบุจำนวนเงิน) ♡</div>
+          <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">พร้อมเพย์: 0806103734 (บัณฑิตา อิ่มอ่ำ)</div>
           <div style="margin-top:10px;">
             <input type="number" id="qrAmountInput" class="input-field" placeholder="ระบุยอดเงินที่ต้องการโอน (เช่น 50, 100)" oninput="generateDynamicPromptPayQR()">
           </div>
-
           <div id="qrcodeDisplay"></div>
           <div id="qrAmountNotice" style="font-size:12px; font-weight:700; color:var(--c-main);"></div>
         </div>
 
-        <!-- แนบสลิปตรวจ EasySlip อัตโนมัติ -->
         <div class="slip-uploader-box" id="slipBox" onclick="document.getElementById('slipFileInput').click()">
           <div style="font-size:24px; color:var(--c-main);">♡</div>
           <div id="slipBoxTitle" style="font-weight:700; color:var(--c-main); margin-top:4px;">แนบสลิปโอนเงิน (ตรวจยอดเงินอัตโนมัติ) ♡</div>
@@ -496,12 +372,10 @@
       </div>
     </div>
 
-    <!-- 4. หน้าประวัติการสั่งซื้อ (Order History) -->
+    <!-- 4. ประวัติการสั่งซื้อ -->
     <div class="tab-view" id="tab-history">
       <div class="glass-card">
-        <h2 style="font-size:16px; font-weight:700; color:var(--c-main); text-align:center; margin-bottom:14px;">
-          ประวัติการสั่งซื้อของคุณ ♡
-        </h2>
+        <h2 style="font-size:16px; font-weight:700; color:var(--c-main); text-align:center; margin-bottom:14px;">ประวัติการสั่งซื้อของคุณ ♡</h2>
         <div id="orderHistoryList">
           <p style="text-align:center; color:var(--text-muted); font-size:13px; padding:20px;">กรุณาเข้าสู่ระบบก่อนสั่งซื้อนะคะ ♡</p>
         </div>
@@ -510,7 +384,7 @@
 
   </div>
 
-  <!-- Modals สำหรับล็อกอิน/สมัครสมาชิก -->
+  <!-- Modals -->
   <div class="app-modal" id="loginModal">
     <div class="app-modal-content">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
@@ -552,7 +426,6 @@
     </div>
   </div>
 
-  <!-- Modal เลือกซื้อแพ็กเกจ -->
   <div class="app-modal" id="appDetailModal">
     <div class="app-modal-content">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -566,7 +439,6 @@
   </div>
 
   <script>
-    // เชื่อมต่อ Firebase และกำหนด Collections เฉพาะของร้าน Rifernshop (ห้ามปะปนกับที่อื่น)
     const firebaseConfig = {
       apiKey: "AIzaSyCkcPDpXEX4Hopb8d7qJu1UypTKXEC0rqw",
       authDomain: "butterbear-d2afd.firebaseapp.com",
@@ -586,7 +458,6 @@
     const DB_USERS = "rifern_users";
     const DB_SLIPS = "rifern_slips";
 
-    // คีย์ EasySlip ใหม่ที่ระบุ
     const EASYSLIP_API_KEY = "58ec5cb8-77ff-4e32-8063-7ce7f96ee23e";
     const PROMPTPAY_NUMBER = "0806103734";
 
@@ -599,7 +470,6 @@
     let userUnsub = null;
     let orderUnsub = null;
 
-    // ระบบเพลง
     const music = document.getElementById('bgMusic');
     function toggleMusic() {
       if (music.paused) music.play().catch(() => {});
@@ -644,7 +514,6 @@
     function switchToRegister() { closeLoginModal(); openRegisterModal(); }
     function switchToLogin() { closeRegisterModal(); openLoginModal(); }
 
-    // จัดการข้อมูลเข้าสู่ระบบ
     async function handleUserRegister() {
       const username = document.getElementById('regUsername').value.trim();
       const email = document.getElementById('regEmail').value.trim().toLowerCase();
@@ -677,7 +546,6 @@
     async function handleUserLogin() {
       const username = document.getElementById('loginUsername').value.trim();
       const pass = document.getElementById('loginPassword').value.trim();
-
       if (!username || !pass) return alert('กรุณากรอกชื่อผู้ใช้และรหัสผ่านนะคะ ♡');
 
       try {
@@ -698,8 +566,8 @@
       const username = document.getElementById('forgotUsername').value.trim();
       const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
       const newPass = document.getElementById('forgotNewPass').value.trim();
-
       if (!username || !email || !newPass) return alert('กรุณากรอกข้อมูลให้ครบถ้วนนะคะ ♡');
+
       try {
         const userDocRef = db.collection(DB_USERS).doc(username);
         const docSnap = await userDocRef.get();
@@ -737,7 +605,7 @@
           userData = doc.data();
           document.getElementById('drawerUserBalance').textContent = `฿${(userData.balance || 0).toFixed(2)}`;
           const roleBadgeEl = document.getElementById('drawerUserRole');
-          if (userData.role === 'admin' || user.username === 'adminnimifle') {
+          if (userData.role === 'admin' || user.username === 'adminmirifle') {
             roleBadgeEl.innerHTML = `<span class="role-badge role-admin">แอดมินเจ้าของร้าน ♡</span>`;
           } else if (userData.role === 'agent') {
             roleBadgeEl.innerHTML = `<span class="role-badge role-agent">ตัวแทน (ราคาส่ง) ♡</span>`;
@@ -776,7 +644,6 @@
 
     checkStoredUser();
 
-    // ดึงการตั้งค่าร้าน Rifernshop
     db.collection(DB_SITE).doc("config").onSnapshot(doc => {
       if (doc.exists) {
         const d = doc.data();
@@ -789,7 +656,6 @@
       }
     });
 
-    // ดึงรายการคำสั่งซื้อล่าสุดขึ้นแสดงบนหน้าแรก (Live Feed)
     db.collection(DB_ORDERS).orderBy("createdAt", "desc").limit(1).onSnapshot(snap => {
       if (!snap.empty) {
         const d = snap.docs[0].data();
@@ -798,13 +664,34 @@
       }
     });
 
-    // ดึงสินค้า
     db.collection(DB_APPS).orderBy("order", "asc").onSnapshot(snap => {
       appsDataList = [];
       snap.forEach(doc => appsDataList.push({ id: doc.id, ...doc.data() }));
+      renderCategoryTabs();
       renderAppsGrid();
       renderHomeHotApps();
     });
+
+    // ดึงหมวดหมู่สินค้าที่มีจริงมาสร้างปุ่มกรองอัตโนมัติ
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryScroll');
+      const customCategories = new Set();
+      appsDataList.forEach(app => {
+        if (app.category && app.category.trim()) customCategories.add(app.category.trim());
+      });
+
+      let html = `
+        <button type="button" class="cat-btn ${currentSelectedCategory==='all'?'active':''}" onclick="filterCategory('all', this)">ทั้งหมด ♡</button>
+        <button type="button" class="cat-btn ${currentSelectedCategory==='ยอดฮิต'?'active':''}" onclick="filterCategory('ยอดฮิต', this)">🔥 ยอดฮิต</button>
+        <button type="button" class="cat-btn ${currentSelectedCategory==='ลดราคา'?'active':''}" onclick="filterCategory('ลดราคา', this)">🏷️ ลดราคา</button>
+      `;
+
+      customCategories.forEach(cat => {
+        html += `<button type="button" class="cat-btn ${currentSelectedCategory===cat?'active':''}" onclick="filterCategory('${cat}', this)">${cat}</button>`;
+      });
+
+      container.innerHTML = html;
+    }
 
     function filterCategory(cat, btn) {
       currentSelectedCategory = cat;
@@ -820,7 +707,7 @@
       const filtered = appsDataList.filter(app => {
         if (currentSelectedCategory === 'all') return true;
         if (currentSelectedCategory === 'ยอดฮิต') return app.tag === 'hot' || app.isHot;
-        if (currentSelectedCategory === 'ลดราคา') return app.tag === 'sale' || app.isSale;
+        if (currentSelectedCategory === 'ลดราคา') return app.tag === 'sale' || (app.discountPercent && app.discountPercent > 0);
         return app.category === currentSelectedCategory;
       });
 
@@ -829,9 +716,14 @@
         const minPrice = (item.plans || []).length > 0 ? Math.min(...item.plans.map(p => p.price)) : 0;
 
         let tagHtml = '';
-        if (item.tag === 'hot') tagHtml = `<span class="tag-badge tag-hot">🔥 ยอดฮิต</span>`;
-        else if (item.tag === 'sale') tagHtml = `<span class="tag-badge tag-sale">🏷️ ลดราคา</span>`;
-        else if (item.tag === 'pop') tagHtml = `<span class="tag-badge tag-pop">✨ แนะนำ</span>`;
+        if (item.tag === 'sale') {
+          const pct = item.discountPercent ? ` -${item.discountPercent}%` : '';
+          tagHtml = `<span class="tag-badge tag-sale">🏷️${pct} SALE</span>`;
+        } else if (item.tag === 'hot') {
+          tagHtml = `<span class="tag-badge tag-hot">🔥 ยอดฮิต</span>`;
+        } else if (item.tag === 'pop') {
+          tagHtml = `<span class="tag-badge tag-pop">✨ แนะนำ</span>`;
+        }
 
         const card = document.createElement('div');
         card.className = 'app-box-card';
@@ -853,11 +745,16 @@
       grid.innerHTML = '';
       const hotList = appsDataList.slice(0, 4);
       hotList.forEach(item => {
+        let tagHtml = `<span class="tag-badge tag-hot">🔥 ฮิต</span>`;
+        if (item.tag === 'sale' && item.discountPercent) {
+          tagHtml = `<span class="tag-badge tag-sale">-${item.discountPercent}%</span>`;
+        }
+
         const card = document.createElement('div');
         card.className = 'app-box-card';
         card.onclick = () => openAppModal(item);
         card.innerHTML = `
-          <span class="tag-badge tag-hot">🔥 ฮิต</span>
+          ${tagHtml}
           <img src="${item.thumb || 'https://files.catbox.moe/3utaq6.jpeg'}" class="app-box-thumb" alt="${item.name}">
           <div class="app-info-block">
             <div class="app-box-name">${item.name}</div>
@@ -876,12 +773,12 @@
       
       const list = document.getElementById('modalPlansList');
       list.innerHTML = '';
-
       const isPrivilege = (userData && (userData.role === 'agent' || userData.role === 'admin'));
 
       (app.plans || []).forEach((p, idx) => {
         const finalPrice = isPrivilege && p.agentPrice ? p.agentPrice : p.price;
         const priceLabel = isPrivilege && p.agentPrice ? `฿${finalPrice} <span style="font-size:10px; color:var(--agent-gold); font-weight:700;">[ราคาส่งตัวแทน]</span>` : `฿${finalPrice}`;
+        const skuTag = p.sku ? `<span style="font-size:10px; color:var(--c-deep); background:#fff0f6; border:1px solid var(--c-border); padding:1px 5px; border-radius:6px; margin-right:4px;">${p.sku}</span>` : '';
 
         const div = document.createElement('div');
         div.className = 'plan-option-card';
@@ -893,7 +790,7 @@
         };
         div.innerHTML = `
           <div>
-            <div style="font-weight:700; font-size:13.5px;">${p.name}</div>
+            <div style="font-weight:700; font-size:13.5px;">${skuTag}${p.name}</div>
             <div style="font-size:11px; color:var(--text-muted);">สต็อก: ${(p.stock || []).length} ชิ้น ♡</div>
           </div>
           <div style="font-weight:700; color:var(--c-main); font-size:14px;">${priceLabel}</div>
@@ -904,7 +801,6 @@
     }
     function closeAppModal() { document.getElementById('appDetailModal').classList.remove('open'); }
 
-    // ยืนยันการสั่งซื้อ
     async function buySelectedPlan() {
       if (!currentUser) { alert('กรุณาเข้าสู่ระบบก่อนสั่งซื้อนะคะ ♡'); openLoginModal(); return; }
       if (selectedPlanIndex < 0) return alert('กรุณาเลือกแพ็กเกจก่อนค่ะ ♡');
@@ -943,18 +839,20 @@
           if (curBal < actualPrice) throw new Error("ยอดเงินไม่พอ");
           if (!targetPlan.stock || targetPlan.stock.length === 0) throw new Error("สินค้าหมด");
 
-          const deliveredCode = targetPlan.stock.shift();
+          const deliveredProductData = targetPlan.stock.shift();
           t.update(userDocRef, { balance: curBal - actualPrice });
           t.update(appDocRef, { plans: curPlans });
 
           const newOrderRef = db.collection(DB_ORDERS).doc();
           t.set(newOrderRef, {
             username: currentUser.username,
+            sku: targetPlan.sku || '',
             appName: app.name,
             planName: targetPlan.name,
             price: actualPrice,
             isAgentPrice: ((userRole === 'agent' || userRole === 'admin') && targetPlan.agentPrice),
-            code: deliveredCode,
+            productData: deliveredProductData,
+            storeTemplate: targetPlan.storeTemplate || '',
             cost: targetPlan.cost || 0,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
           });
@@ -970,7 +868,6 @@
       }
     }
 
-    // ฟังก์ชันแยกข้อมูล อีเมล/พาส/พิน/จอ/วันหมด จากฟอร์มสินค้าให้อัตโนมัติ (สำหรับตัวแทน)
     function parseStockDetails(raw) {
       if (!raw) return {};
       const res = {};
@@ -1009,7 +906,11 @@
 
         let html = '';
         orders.forEach((d, idx) => {
-          const parsed = parseStockDetails(d.code);
+          const rawProduct = d.productData || d.code || '';
+          const storeForm = d.storeTemplate || '';
+          const fullDeliveryText = (storeForm ? storeForm + '\n\n--------------------\n' : '') + rawProduct;
+
+          const parsed = parseStockDetails(rawProduct);
           let extraPills = '';
           if (parsed.email) extraPills += `<div class="extracted-field-pill" onclick="copyText('${parsed.email}', 'คัดลอกเมลแล้ว ♡')">เมล: ${parsed.email} <span>คัดลอก</span></div>`;
           if (parsed.pass) extraPills += `<div class="extracted-field-pill" onclick="copyText('${parsed.pass}', 'คัดลอกรหัสแล้ว ♡')">พาส: ${parsed.pass} <span>คัดลอก</span></div>`;
@@ -1023,9 +924,22 @@
                 <span style="color:var(--c-main);">${d.appName} (${d.planName})</span>
                 <span>฿${d.price}</span>
               </div>
-              <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px; font-weight:600;">แบบฟอร์มสินค้าของทางร้าน ♡:</div>
-              <div class="order-code-box" id="order-box-${idx}">${escapeHtml(d.code)}</div>
-              <button type="button" class="btn-main" style="padding:9px; font-size:12px; margin-top:8px;" onclick="copyFullOrder(${idx})">คัดลอกแบบฟอร์มร้านทั้งหมด ♡</button>
+              ${d.sku ? `<div class="order-sku-badge">รหัสสต็อก: ${d.sku}</div>` : ''}
+
+              <!-- กล่อง 1: ข้อมูลสินค้าที่ได้รับ -->
+              <div style="font-size:12px; color:var(--text-muted); margin-bottom:4px; font-weight:700;">🔑 ข้อมูลสินค้าที่ได้รับ:</div>
+              <div class="order-code-box" id="product-box-${idx}">${escapeHtml(rawProduct)}</div>
+
+              <!-- กล่อง 2: แบบฟอร์มของทางร้าน (ถ้ามี) -->
+              ${storeForm ? `
+                <div style="font-size:12px; color:var(--text-muted); margin-bottom:4px; font-weight:700;">💌 แบบฟอร์มของทางร้าน:</div>
+                <div class="order-code-box" style="background:#fff4f8;" id="form-box-${idx}">${escapeHtml(storeForm)}</div>
+              ` : ''}
+
+              <!-- ตัวเลือกกดคัดลอกให้ตัวแทน -->
+              <button type="button" class="btn-main" onclick="copyFullOrderText(${idx})">📋 คัดลอกแบบฟอร์มร้านทั้งหมด ♡</button>
+              <button type="button" class="btn-sub" onclick="copyOnlyProduct(${idx})">✂️ คัดลอกเฉพาะข้อมูลสินค้า (ไม่เอาฟอร์มร้าน) ♡</button>
+              <textarea id="hidden-full-${idx}" style="display:none;">${fullDeliveryText}</textarea>
 
               ${extraPills ? `
                 <div style="font-size:11px; font-weight:700; color:var(--agent-gold); margin-top:10px;">
@@ -1040,10 +954,16 @@
       });
     }
 
-    function copyFullOrder(idx) {
-      const el = document.getElementById(`order-box-${idx}`);
+    function copyFullOrderText(idx) {
+      const el = document.getElementById(`hidden-full-${idx}`);
       if (!el) return;
-      navigator.clipboard.writeText(el.innerText).then(() => alert('คัดลอกแบบฟอร์มทั้งหมดเรียบร้อยแล้วค่ะ ♡'));
+      navigator.clipboard.writeText(el.value).then(() => alert('คัดลอกแบบฟอร์มร้านทั้งหมดเรียบร้อยแล้วค่ะ ♡'));
+    }
+
+    function copyOnlyProduct(idx) {
+      const el = document.getElementById(`product-box-${idx}`);
+      if (!el) return;
+      navigator.clipboard.writeText(el.innerText).then(() => alert('คัดลอกเฉพาะข้อมูลสินค้าเรียบร้อยแล้วค่ะ ♡'));
     }
 
     function escapeHtml(text) {
@@ -1051,7 +971,6 @@
       return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    // สร้าง PromptPay Dynamic QR Code แบบมาตรฐาน EMVCo พร้อมเปย์ระบุจำนวนเงิน
     function crc16(data) {
       let crc = 0xFFFF;
       for (let i = 0; i < data.length; i++) {
@@ -1066,7 +985,6 @@
       let formattedPhone = phone.replace(/[^0-9]/g, '');
       if (formattedPhone.startsWith('0')) formattedPhone = '66' + formattedPhone.substring(1);
       formattedPhone = formattedPhone.padStart(13, '0');
-
       let target = '0016A0000006770101110113' + formattedPhone;
       let payload = '0002010102122937' + target + '5802TH5303764';
 
@@ -1100,10 +1018,8 @@
       if (amtVal > 0) notice.textContent = `ยอดเงินที่ระบุ: ฿${amtVal.toFixed(2)} บาท ♡`;
       else notice.textContent = `คิวอาร์โค้ดทั่วไป (ลูกค้าระบุยอดเอง)`;
     }
-    // สั่งสร้าง QR เริ่มต้น
     generateDynamicPromptPayQR();
 
-    // ระบบตรวจสลิป EasySlip
     async function handleSlipUpload(event) {
       if (!currentUser) { alert('กรุณาเข้าสู่ระบบก่อนแนบสลิปนะคะ ♡'); openLoginModal(); return; }
       const file = event.target.files[0];
@@ -1169,7 +1085,6 @@
       navigator.clipboard.writeText(str).then(() => alert(msg));
     }
 
-    // รูปลอย mjiy0o.png
     const floatBox = document.getElementById('floatContainer');
     setInterval(() => {
       const el = document.createElement('img');
