@@ -26,7 +26,7 @@
       background: radial-gradient(circle at top, #ffffff 0%, #fdf2f8 50%, #fce7f3 100%);
       color: var(--text); min-height: 100vh; padding: 20px 14px 60px; display: flex; justify-content: center;
     }
-    .container { width: 100%; max-width: 480px; }
+    .container { width: 100%; max-width: 500px; }
     .card {
       background: var(--card-bg); border-radius: 24px; padding: 20px;
       box-shadow: 0 10px 25px rgba(244, 114, 182, 0.25); border: 1.5px solid #fff; margin-bottom: 16px;
@@ -35,12 +35,11 @@
     .field-group { margin-bottom: 12px; }
     .field-label { font-size: 13px; font-weight: 600; margin-bottom: 4px; display: block; }
     .input-box, .textarea-box, .select-box {
-      width: 100%; padding: 11px 14px; border-radius: 14px; border: 1.5px solid var(--c-border);
-      outline: none; font-size: 13.5px; background: #fff;
+      width: 100%; padding: 10px 12px; border-radius: 14px; border: 1.5px solid var(--c-border);
+      outline: none; font-size: 13px; background: #fff;
     }
-    .textarea-box { min-height: 80px; resize: vertical; }
+    .textarea-box { min-height: 75px; resize: vertical; }
 
-    /* Stats Grid แดชบอร์ดสรุปยอดขาย ต้นทุน กำไร */
     .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
     .stat-card {
       background: #fff; border: 1.5px solid var(--c-border); border-radius: 16px; padding: 12px; text-align: center;
@@ -62,10 +61,10 @@
     .tab-content.active { display: block; }
 
     .app-admin-card {
-      background: #fff; border: 1.5px solid var(--c-border); border-radius: 18px; padding: 14px; margin-bottom: 12px;
+      background: #fff; border: 1.5px solid var(--c-border); border-radius: 18px; padding: 14px; margin-bottom: 14px;
     }
     .plan-stock-card {
-      background: #fdf2f8; border: 1px dashed var(--c-main); border-radius: 12px; padding: 10px; margin-top: 8px;
+      background: #fff9fc; border: 1.5px dashed var(--c-main); border-radius: 14px; padding: 12px; margin-top: 10px;
     }
     .btn {
       width: 100%; padding: 12px; border-radius: 18px; border: none; font-size: 14px;
@@ -79,7 +78,6 @@
 <body>
 
 <div class="container">
-  <!-- ล็อกอินแอดมิน: ใช้ label เป็น email และ password ตามข้อ 12 ห้ามเผยข้อมูลจริง -->
   <div class="card" id="loginBox">
     <div class="title">Admin Dashboard ♡ Rifernshop</div>
     <div class="field-group">
@@ -93,7 +91,6 @@
     <button type="button" class="btn" onclick="handleLogin()">เข้าสู่ระบบแอดมิน ♡</button>
   </div>
 
-  <!-- แผงแดชบอร์ดหลัก -->
   <div id="dashboardBox" class="hidden">
     <div class="nav-tabs">
       <button type="button" class="tab-btn active" onclick="switchAdminTab('stats')">📊 สรุปยอดขาย</button>
@@ -104,7 +101,7 @@
       <button type="button" class="tab-btn" onclick="switchAdminTab('account')">5. บัญชีแอดมิน</button>
     </div>
 
-    <!-- แถบ 0: สถิติยอดขาย ต้นทุน กำไร -->
+    <!-- สถิติยอดขาย -->
     <div class="tab-content active" id="tab-stats">
       <div class="card">
         <div class="title">สรุปยอดขาย ต้นทุน & กำไร ♡</div>
@@ -129,7 +126,7 @@
       </div>
     </div>
 
-    <!-- แถบ 1: ร้านค้า -->
+    <!-- ข้อมูลร้าน -->
     <div class="tab-content" id="tab-general">
       <div class="card">
         <div class="title">ข้อมูลโปรไฟล์ร้าน Rifernshop ♡</div>
@@ -161,7 +158,7 @@
       </div>
     </div>
 
-    <!-- แถบ 2: สินค้า, สต็อก, แท็ก & หมวดหมู่ -->
+    <!-- จัดการสินค้า หมวดหมู่ สต็อก และป้ายลดราคา % -->
     <div class="tab-content" id="tab-apps">
       <div class="card">
         <div class="title">จัดการสินค้า หมวดหมู่ & สต็อก ♡</div>
@@ -171,7 +168,7 @@
       </div>
     </div>
 
-    <!-- แถบ 3: เติมเงิน -->
+    <!-- เติมเงิน -->
     <div class="tab-content" id="tab-wallet">
       <div class="card">
         <div class="title">เติมเครดิตลูกค้า / แอดมิน ♡</div>
@@ -187,7 +184,7 @@
       </div>
     </div>
 
-    <!-- แถบ 4: ยศตัวแทน -->
+    <!-- ตัวแทน -->
     <div class="tab-content" id="tab-agents">
       <div class="card">
         <div class="title">จัดการยศตัวแทนจำหน่าย ♡</div>
@@ -201,7 +198,7 @@
       </div>
     </div>
 
-    <!-- แถบ 5: บัญชีแอดมิน -->
+    <!-- แอดมิน -->
     <div class="tab-content" id="tab-account">
       <div class="card">
         <div class="title">บัญชีแอดมิน ♡</div>
@@ -243,8 +240,7 @@
   const DB_ORDERS = "rifern_orders";
   const DB_USERS = "rifern_users";
 
-  // บัญชีแอดมินตามข้อ 12
-  let adminUser = "adminnimifle";
+  let adminUser = "adminmirifle";
   let adminEmail = "fafein2@gmail.com";
   let adminPass = "@rifernshop.p99";
   let appsEditData = [];
@@ -262,6 +258,12 @@
         balance: 99999,
         role: "admin",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } else {
+      await adminRef.update({
+        role: "admin",
+        email: adminEmail,
+        password: adminPass
       });
     }
   }
@@ -290,7 +292,6 @@
     document.getElementById(`tab-${name}`).classList.add('active');
   }
 
-  // คำนวณยอดขาย ต้นทุน กำไร และสต็อกคงเหลือ
   async function calculateDashboardStats() {
     const orderSnap = await db.collection(DB_ORDERS).get();
     let totalSales = 0;
@@ -341,10 +342,19 @@
             thumb: "https://files.catbox.moe/kszmeo.jpeg",
             desc: "ดูได้ 4K คมชัดสุดๆ ไม่สะดุด ♡",
             category: "แอพดูหนัง",
-            tag: "hot",
+            tag: "sale",
+            discountPercent: 30,
             order: 0,
             plans: [
-              { name: "30 วัน", price: 100, agentPrice: 85, cost: 70, stock: [] }
+              {
+                sku: "#NF-30D",
+                name: "30 วัน",
+                price: 100,
+                agentPrice: 85,
+                cost: 70,
+                storeTemplate: "ขอบคุณที่อุดหนุน Rifernshop นะคะ ♡\n- ห้ามเปลี่ยนรหัสผ่าน\n- เคลมแจ้งทางไลน์ @677ogeof",
+                stock: []
+              }
             ]
           }
         ];
@@ -367,16 +377,38 @@
         const stockStr = (p.stock || []).join(FORM_SEPARATOR);
         plansHtml += `
           <div class="plan-stock-card">
-            <div style="display:flex; gap:6px; margin-bottom:4px; align-items:center;">
+            <!-- รหัสสต็อก และ ชื่อแพ็กเกจ -->
+            <div style="display:flex; gap:6px; margin-bottom:6px;">
+              <input type="text" class="input-box" value="${p.sku || ''}" style="flex:1; border-color:var(--c-deep); background:#fff0f6; font-weight:700;" placeholder="รหัสสต็อก เช่น #NF01" oninput="appsEditData[${aIdx}].plans[${pIdx}].sku=this.value">
               <input type="text" class="input-box" value="${p.name}" style="flex:2;" placeholder="ชื่อแพ็กเกจ" oninput="appsEditData[${aIdx}].plans[${pIdx}].name=this.value">
-              <input type="number" class="input-box" value="${p.price}" style="flex:1;" placeholder="ราคาขาย (฿)" oninput="appsEditData[${aIdx}].plans[${pIdx}].price=parseFloat(this.value)||0">
-              <input type="number" class="input-box" value="${p.agentPrice || ''}" style="flex:1; border-color:var(--agent-gold); background:#fffbeb;" placeholder="ราคาส่ง (฿)" oninput="appsEditData[${aIdx}].plans[${pIdx}].agentPrice=parseFloat(this.value)||0">
-              <input type="number" class="input-box" value="${p.cost || ''}" style="flex:1; border-color:#94a3b8;" placeholder="ต้นทุน (฿)" oninput="appsEditData[${aIdx}].plans[${pIdx}].cost=parseFloat(this.value)||0">
-              <button type="button" style="background:#fee2e2; border:none; color:#ef4444; border-radius:10px; padding:0 8px; height:36px;" onclick="removePlan(${aIdx}, ${pIdx})">✕</button>
+              <button type="button" style="background:#fee2e2; border:none; color:#ef4444; border-radius:10px; padding:0 10px; cursor:pointer;" onclick="removePlan(${aIdx}, ${pIdx})">✕</button>
             </div>
-            <textarea class="textarea-box" style="font-size:11.5px; font-family:monospace; min-height:90px;" placeholder="วางสต็อก/ฟอร์มที่นี่ (หากมีหลายอันให้คั่นด้วย ===)" oninput="updateStock(${aIdx}, ${pIdx}, this.value)">${stockStr}</textarea>
-            <div style="font-size:11px; color:#64748b; margin-top:2px;">
-              คงเหลือในสต็อก: <strong style="color:var(--c-main);">${(p.stock || []).length}</strong> ชิ้น ♡
+
+            <!-- ราคาขาย, ราคาส่ง, ต้นทุน -->
+            <div style="display:flex; gap:6px; margin-bottom:8px;">
+              <input type="number" class="input-box" value="${p.price}" style="flex:1;" placeholder="ราคาขาย (฿)" oninput="appsEditData[${aIdx}].plans[${pIdx}].price=parseFloat(this.value)||0">
+              <input type="number" class="input-box" value="${p.agentPrice || ''}" style="flex:1; border-color:var(--agent-gold); background:#fffbeb;" placeholder="ราคาส่ง ตท. (฿)" oninput="appsEditData[${aIdx}].plans[${pIdx}].agentPrice=parseFloat(this.value)||0">
+              <input type="number" class="input-box" value="${p.cost || ''}" style="flex:1; border-color:#94a3b8;" placeholder="ต้นทุน (฿)" oninput="appsEditData[${aIdx}].plans[${pIdx}].cost=parseFloat(this.value)||0">
+            </div>
+
+            <!-- แบบฟอร์มร้าน -->
+            <div style="margin-bottom:8px;">
+              <label style="font-size:11.5px; font-weight:700; color:var(--c-deep); display:block; margin-bottom:2px;">
+                💌 แบบฟอร์มของทางร้าน:
+              </label>
+              <textarea class="textarea-box" style="font-size:11.5px; min-height:60px;" placeholder="เช่น ขอบคุณที่อุดหนุน Rifernshop นะคะ ♡..." oninput="appsEditData[${aIdx}].plans[${pIdx}].storeTemplate=this.value">${p.storeTemplate || ''}</textarea>
+            </div>
+
+            <!-- ข้อมูลสินค้าที่ได้รับ -->
+            <div>
+              <label style="font-size:11.5px; font-weight:700; color:var(--c-main); display:block; margin-bottom:2px;">
+                🔑 ข้อมูลสินค้าที่ได้รับ (สต็อกแยก: เมล/พาส/พิน/จอ/วันหมด) [คั่นด้วย ===]:
+              </label>
+              <textarea class="textarea-box" style="font-size:11.5px; font-family:monospace; min-height:80px;" placeholder="อีเมล: user@mail.com&#10;พาส: 123456&#10;จอ: 1&#10;พิน: 0000&#10;วันหมด: 30 วัน&#10;===&#10;..." oninput="updateStock(${aIdx}, ${pIdx}, this.value)">${stockStr}</textarea>
+            </div>
+
+            <div style="font-size:11px; color:#64748b; margin-top:4px;">
+              คงเหลือในสต็อก: <strong style="color:var(--c-main); font-size:12px;">${(p.stock || []).length}</strong> ชิ้น ♡
             </div>
           </div>
         `;
@@ -385,7 +417,7 @@
       card.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <strong style="color:var(--c-main);">กล่องที่ ${aIdx+1} ♡</strong>
-          <button type="button" style="background:#fee2e2; border:none; color:#ef4444; border-radius:10px; padding:4px 8px; font-size:12px;" onclick="deleteApp(${aIdx})">ลบแอพนี้ ♡</button>
+          <button type="button" style="background:#fee2e2; border:none; color:#ef4444; border-radius:10px; padding:4px 8px; font-size:12px; cursor:pointer;" onclick="deleteApp(${aIdx})">ลบสินค้านี้ ♡</button>
         </div>
         <div class="field-group">
           <label class="field-label">ชื่อสินค้า</label>
@@ -395,30 +427,46 @@
           <label class="field-label">URL รูปปก</label>
           <input type="text" class="input-box" value="${app.thumb}" oninput="appsEditData[${aIdx}].thumb=this.value">
         </div>
+
+        <!-- หมวดหมู่แบบพิมพ์เองได้อิสระ -->
+        <div class="field-group">
+          <label class="field-label">หมวดหมู่สินค้า (พิมพ์ตั้งชื่อหมวดหมู่เองได้เลย เช่น แอพดูหนัง, ฟังเพลง, ฟูลเซ็ต) ♡</label>
+          <input type="text" class="input-box" value="${app.category || 'ทั่วไป'}" placeholder="ระบุชื่อหมวดหมู่" oninput="appsEditData[${aIdx}].category=this.value">
+        </div>
+
+        <!-- ป้ายแท็ก และช่องใส่ % ลดราคา -->
         <div style="display:flex; gap:8px; margin-bottom:10px;">
           <div style="flex:1;">
-            <label class="field-label">หมวดหมู่</label>
-            <select class="select-box" onchange="appsEditData[${aIdx}].category=this.value">
-              <option value="แอพดูหนัง" ${app.category==='แอพดูหนัง'?'selected':''}>แอพดูหนัง</option>
-              <option value="ฟังเพลง" ${app.category==='ฟังเพลง'?'selected':''}>ฟังเพลง</option>
-              <option value="ทั่วไป" ${app.category==='ทั่วไป'?'selected':''}>ทั่วไป</option>
-            </select>
-          </div>
-          <div style="flex:1;">
-            <label class="field-label">ป้ายแท็ก</label>
-            <select class="select-box" onchange="appsEditData[${aIdx}].tag=this.value">
+            <label class="field-label">ป้ายแท็กบนรูป</label>
+            <select class="select-box" onchange="onTagChange(${aIdx}, this.value)">
               <option value="" ${!app.tag?'selected':''}>ไม่มี</option>
+              <option value="sale" ${app.tag==='sale'?'selected':''}>🏷️ ลดราคา (ระบุ % ได้)</option>
               <option value="hot" ${app.tag==='hot'?'selected':''}>🔥 ยอดฮิต</option>
-              <option value="sale" ${app.tag==='sale'?'selected':''}>🏷️ ลดราคา</option>
               <option value="pop" ${app.tag==='pop'?'selected':''}>✨ แนะนำ</option>
             </select>
           </div>
+          <div style="flex:1; display:${app.tag==='sale'?'block':'none'};" id="discount-box-${aIdx}">
+            <label class="field-label">ลดกี่เปอร์เซ็นต์ (%)</label>
+            <input type="number" class="input-box" style="border-color:#f59e0b; background:#fffbeb; font-weight:700;" value="${app.discountPercent || ''}" placeholder="เช่น 20 หรือ 50" oninput="appsEditData[${aIdx}].discountPercent=parseFloat(this.value)||0">
+          </div>
         </div>
+
         ${plansHtml}
         <button type="button" class="btn btn-secondary" style="padding:8px; font-size:12px; margin-top:8px;" onclick="addPlanToApp(${aIdx})">+ เพิ่มแพ็กเกจย่อย ♡</button>
       `;
       box.appendChild(card);
     });
+  }
+
+  function onTagChange(aIdx, val) {
+    appsEditData[aIdx].tag = val;
+    const discountInputBox = document.getElementById(`discount-box-${aIdx}`);
+    if (val === 'sale') {
+      discountInputBox.style.display = 'block';
+    } else {
+      discountInputBox.style.display = 'none';
+      appsEditData[aIdx].discountPercent = 0;
+    }
   }
 
   function updateStock(aIdx, pIdx, text) {
@@ -427,7 +475,15 @@
   }
 
   function addPlanToApp(aIdx) {
-    appsEditData[aIdx].plans.push({ name: "แพ็กเกจใหม่", price: 50, agentPrice: 40, cost: 30, stock: [] });
+    appsEditData[aIdx].plans.push({
+      sku: `#SKU-${appsEditData[aIdx].plans.length + 1}`,
+      name: "แพ็กเกจใหม่",
+      price: 50,
+      agentPrice: 40,
+      cost: 30,
+      storeTemplate: "ขอบคุณที่อุดหนุนนะคะ ♡",
+      stock: []
+    });
     renderAppsEditor();
   }
 
@@ -442,9 +498,18 @@
       thumb: "https://files.catbox.moe/3utaq6.jpeg",
       desc: "",
       category: "ทั่วไป",
-      tag: "hot",
+      tag: "sale",
+      discountPercent: 20,
       order: appsEditData.length,
-      plans: [{ name: "30 วัน", price: 50, agentPrice: 40, cost: 30, stock: [] }]
+      plans: [{
+        sku: "#SKU-01",
+        name: "30 วัน",
+        price: 50,
+        agentPrice: 40,
+        cost: 30,
+        storeTemplate: "ขอบคุณที่อุดหนุน Rifernshop นะคะ ♡",
+        stock: []
+      }]
     });
     renderAppsEditor();
   }
@@ -467,8 +532,9 @@
         name: app.name,
         thumb: app.thumb,
         desc: app.desc || "",
-        category: app.category || "ทั่วไป",
+        category: (app.category && app.category.trim()) ? app.category.trim() : "ทั่วไป",
         tag: app.tag || "",
+        discountPercent: app.discountPercent || 0,
         order: idx,
         plans: app.plans || []
       });
@@ -476,7 +542,7 @@
 
     await batch.commit();
     calculateDashboardStats();
-    alert("บันทึกสินค้า, สต็อก และราคาส่งทั้งหมดเรียบร้อยแล้วค่ะ ♡");
+    alert("บันทึกสินค้า, หมวดหมู่, ป้ายลดราคา % และสต็อกเรียบร้อยแล้วค่ะ ♡");
   }
 
   async function saveGeneralConfig() {
