@@ -154,7 +154,6 @@
     }
     .feed-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; }
 
-    /* แท็บหมวดหมู่แบบไดนามิก */
     .category-scroll {
       display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-bottom: 12px; padding: 2px 0;
     }
@@ -171,7 +170,6 @@
       overflow: hidden; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: relative;
     }
 
-    /* สไตล์ป้ายบนกล่องสินค้า */
     .tag-badge {
       position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 10px;
       font-size: 10.5px; font-weight: 700; color: #fff; z-index: 3; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
@@ -185,11 +183,37 @@
     .app-box-name { font-size: 13.5px; font-weight: 700; color: var(--text-pastel-dark); }
     .app-sub-info { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
 
-    .art-text-box {
-      background: #ffffff; border: 1.5px dashed var(--c-border); border-radius: 20px;
-      padding: 14px; font-family: monospace; font-size: 13px; line-height: 1.6;
-      white-space: pre-wrap; text-align: center; color: var(--text-pastel-dark) !important; margin-bottom: 12px;
+    /* ปรับแต่งกล่องข้อความเตือนให้บรรทัดเสมอ สวยงาม ไม่ตกหล่น */
+    .art-text-box-custom {
+      background: #ffffff;
+      border: 1.5px dashed var(--c-border);
+      border-radius: 20px;
+      padding: 14px 10px;
+      text-align: center;
+      margin-bottom: 12px;
+      color: var(--text-pastel-dark) !important;
+      line-height: 1.6;
     }
+    .art-title-line {
+      font-size: 12.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      margin-bottom: 4px;
+      letter-spacing: -0.2px;
+    }
+    .art-name-line {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--c-deep) !important;
+      margin-bottom: 6px;
+      letter-spacing: 0.2px;
+    }
+    .art-sub-line {
+      font-size: 11.5px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
     .copy-pill-btn {
       display: flex; align-items: center; justify-content: space-between; background: #ffffff;
       border: 1.5px solid var(--c-border); border-radius: 16px; padding: 11px 16px;
@@ -326,9 +350,7 @@
       <div class="glass-card">
         <h2 style="font-size:16px; font-weight:700; color:var(--c-main); text-align:center; margin-bottom:12px;">เลือกสินค้าที่ต้องการสั่งซื้อ ♡</h2>
         
-        <!-- หมวดหมู่แบบสร้างอัตโนมัติตามที่มีการตั้งค่าในระบบ -->
         <div class="category-scroll" id="categoryScroll"></div>
-
         <div class="apps-grid" id="appsGrid"></div>
       </div>
     </div>
@@ -337,13 +359,17 @@
     <div class="tab-view" id="tab-topup">
       <div class="glass-card">
         <h2 style="font-size:16px; font-weight:700; color:var(--c-main); text-align:center; margin-bottom:12px;">payment ♡</h2>
-        <div class="art-text-box">˙✧˖°  โอนผิด ไม่รับผิดชอบ  เช็คชื่อบัญชีก่อนโอนนะคะ ⸝⸝ ♡
-𓊆บัญชี - บัณฑิตา อิ่มอ่ำ เท่านั้น𓊇ྀི
+        
+        <!-- กล่องข้อความกรอบแรก: ปรับให้บรรทัดเท่ากัน ไม่มีข้อความตกหล่น -->
+        <div class="art-text-box-custom">
+          <div class="art-title-line">˙✧˖°🍒  โอนผิด ไม่รับผิดชอบ  เช็คชื่อบัญชีก่อนโอนนะคะ ⸝⸝ ♡</div>
+          <div class="art-name-line">𓊆𝗻𝗮𝗺𝗲 - บัณฑิตา อิ่มอ่ำ เท่านั้น𓊇ྀི</div>
+          <div class="art-sub-line">｡⋆୨ สินค้าหมดรอเติมเท่านั้นไม่คืนเงิน<br>โอนเกินทบยอดไว้ในเว็บเท่านั้น 🎀｡°</div>
+        </div>
 
-｡⋆୨โอนเกินทบยอดหรือรอเติมสินค้าเท่านั้นไม่คืนเงินนะคะ ｡°</div>
-
-        <div class="copy-pill-btn" onclick="copyText('1251363338', 'คัดลอกเลขบัญชี k-bank แล้ว ♡')">
-          <span style="font-weight:600;">k-bank : 1251363338</span>
+        <!-- กล่องคัดลอกบัญชี SCB ตามที่สั่ง และ Wallet (ไม่มีสีน้ำเงิน) -->
+        <div class="copy-pill-btn" onclick="copyText('7382672410', 'คัดลอกเลขบัญชี scb แล้ว ♡')">
+          <span style="font-weight:600;">scb : 738-267241-0</span>
           <span style="color:var(--c-main) !important; font-size:12px;">คัดลอก ♡</span>
         </div>
         <div class="copy-pill-btn" onclick="copyText('0806103734', 'คัดลอกเบอร์ wallet แล้ว ♡')">
@@ -351,8 +377,13 @@
           <span style="color:var(--c-main) !important; font-size:12px;">คัดลอก ♡</span>
         </div>
 
-        <div class="art-text-box" style="margin-top:10px;">꒰✿ เติมเงินแล้วสลิปไม่ตรวจหรือเงินไม่เข้าเว็บแจ้งแอดมินทีไลน์ปัญหาได้เลยค่ะ ꒱ @677ogeof ♡</div>
+        <!-- กล่องข้อความกรอบสอง: จัดระยะบรรทัดใหม่ ไม่ให้ตกหล่น -->
+        <div class="art-text-box-custom" style="margin-top:10px; font-size:12px; line-height:1.6;">
+          ꒰✿ เติมเงินแล้วสลิปไม่ตรวจ หรือเงินไม่เข้าเว็บ<br>
+          แจ้งแอดมินที่ไลน์ปัญหาได้เลยค่ะ ꒱ @677ogeof ♡
+        </div>
 
+        <!-- ระบบสร้าง PromptPay Dynamic QR -->
         <div class="qr-generate-card">
           <div style="font-size:13.5px; font-weight:700; color:var(--c-main);">⚡ สแกนจ่ายพร้อมเพย์ (ระบุจำนวนเงิน) ♡</div>
           <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">พร้อมเพย์: 0806103734 (บัณฑิตา อิ่มอ่ำ)</div>
@@ -363,6 +394,7 @@
           <div id="qrAmountNotice" style="font-size:12px; font-weight:700; color:var(--c-main);"></div>
         </div>
 
+        <!-- ตรวจสลิป EasySlip -->
         <div class="slip-uploader-box" id="slipBox" onclick="document.getElementById('slipFileInput').click()">
           <div style="font-size:24px; color:var(--c-main);">♡</div>
           <div id="slipBoxTitle" style="font-weight:700; color:var(--c-main); margin-top:4px;">แนบสลิปโอนเงิน (ตรวจยอดเงินอัตโนมัติ) ♡</div>
@@ -672,7 +704,6 @@
       renderHomeHotApps();
     });
 
-    // ดึงหมวดหมู่สินค้าที่มีจริงมาสร้างปุ่มกรองอัตโนมัติ
     function renderCategoryTabs() {
       const container = document.getElementById('categoryScroll');
       const customCategories = new Set();
@@ -926,17 +957,14 @@
               </div>
               ${d.sku ? `<div class="order-sku-badge">รหัสสต็อก: ${d.sku}</div>` : ''}
 
-              <!-- กล่อง 1: ข้อมูลสินค้าที่ได้รับ -->
               <div style="font-size:12px; color:var(--text-muted); margin-bottom:4px; font-weight:700;">🔑 ข้อมูลสินค้าที่ได้รับ:</div>
               <div class="order-code-box" id="product-box-${idx}">${escapeHtml(rawProduct)}</div>
 
-              <!-- กล่อง 2: แบบฟอร์มของทางร้าน (ถ้ามี) -->
               ${storeForm ? `
                 <div style="font-size:12px; color:var(--text-muted); margin-bottom:4px; font-weight:700;">💌 แบบฟอร์มของทางร้าน:</div>
                 <div class="order-code-box" style="background:#fff4f8;" id="form-box-${idx}">${escapeHtml(storeForm)}</div>
               ` : ''}
 
-              <!-- ตัวเลือกกดคัดลอกให้ตัวแทน -->
               <button type="button" class="btn-main" onclick="copyFullOrderText(${idx})">📋 คัดลอกแบบฟอร์มร้านทั้งหมด ♡</button>
               <button type="button" class="btn-sub" onclick="copyOnlyProduct(${idx})">✂️ คัดลอกเฉพาะข้อมูลสินค้า (ไม่เอาฟอร์มร้าน) ♡</button>
               <textarea id="hidden-full-${idx}" style="display:none;">${fullDeliveryText}</textarea>
